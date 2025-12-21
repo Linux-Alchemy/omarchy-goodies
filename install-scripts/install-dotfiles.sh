@@ -25,7 +25,7 @@ fi
 # Check if the clone was successful
 if [ $? -eq 0 ]; then
   echo "Backing up original files..."
-  cp ~/.config/hypr/bindings.conf bindingsndings.conf.bak
+  cp ~/.config/hypr/bindings.conf bindings.conf.bak
   cp ~/.config/hypr/input.conf input.conf.bak
   cp ~/.config/hypr/monitors.conf monitors.conf.bak
   cp ~/.config/starship.toml starship.toml.bak
