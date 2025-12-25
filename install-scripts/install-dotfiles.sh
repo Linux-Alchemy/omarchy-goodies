@@ -1,19 +1,24 @@
 #!/bin/bash
 
 ORIGINAL_DIR=$(pwd)
-REPO_URL="https://github.com/Linux-Alchemy/omarchy-goodies/tree/master/dotfiles"
+REPO_URL="https://github.com/Linux-Alchemy/dotfiles.git"
 REPO_NAME="dotfiles"
 
+
+if [[ "$(pwd -P)" != "$HOME" ]]; then
+  cd ~
+fi
+
+# Checking if STOW installed 
 is_stow_installed() {
   pacman -Qi "stow" &> /dev/null
 }
 
 if ! is_stow_installed; then
-  echo "Install stow first"
+  echo "Stow is not installed. You should probably do that first. Goodbye."
   exit 1
 fi
 
-cd ~
 
 # Check if the repository already exists
 if [ -d "$REPO_NAME" ]; then
@@ -24,26 +29,48 @@ fi
 
 # Check if the clone was successful
 if [ $? -eq 0 ]; then
-  echo "Backing up original files..."
-  cp ~/.config/hypr/bindings.conf bindings.conf.bak
-  cp ~/.config/hypr/input.conf input.conf.bak
-  cp ~/.config/hypr/monitors.conf monitors.conf.bak
-  cp ~/.config/starship.toml starship.toml.bak
-  cp ~/.bashrc .bashrc.bak
-  cp ~/.zshrc .zshrc.bak
-  cp ~/.config/alacritty/alacritty.toml alacritty.toml.bak
-  cp ~/.config/ghostty/config config.bak
-  cp ~/.config/waybar/config.jsonc config.jsonc.bak
-  cp ~//config/waybar/style.css style.css.bak
-  echo "Original files backup complete."
-
-  cd "$REPO_NAME"
-  stow hypr
-  stow shell
-  stow terminals
-  stow waybar
- 
+  echo "Clone sucessful. So far so good..."
 else
-  echo "Failed to clone the repository."
+  echo "Failed to clone the repository. Goodbye."
   exit 1
 fi
+
+
+# Targets for removal and replacement
+TARGETS=(
+  "$HOME/.bashrc"
+  "$HOME/.zshrc"
+  "$HOME/.config/hypr/bindings.conf"
+  "$HOME/.config/hypr/input.conf"
+  "$HOME/.config/hypr/monitors.conf"
+  "$HOME/.config/starship.toml"
+  "$HOME/.config/ghostty/config"
+  "$HOME/.config/alacritty/alacritty.toml"
+  "$HOME/.config/waybar/config.jsonc"
+  "$HOME/.confing/waybar/style.css"
+  )
+
+# Backup the existing defaults...just in case, then clear the way for STOW 
+for target in "${TARGETS[@]}"; do
+  if [ -e "$target" ]; then
+    echo "Removing $target"
+    rm -rf "$target"
+  fi
+done
+
+
+PACKAGES=(
+  "hypr"
+  "shell"
+  "terminals"
+  "waybar"
+  )
+
+for pkg in "${PACKAGES[@]}"; do
+  echo "Stowing $pkg..."
+  stow -v "$pkg"
+done
+
+echo "All configs installed...probably."
+
+
