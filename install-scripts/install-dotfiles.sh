@@ -47,10 +47,10 @@ TARGETS=(
   "$HOME/.config/ghostty/config"
   "$HOME/.config/alacritty/alacritty.toml"
   "$HOME/.config/waybar/config.jsonc"
-  "$HOME/.confing/waybar/style.css"
+  "$HOME/.config/waybar/style.css"
   )
 
-# Backup the existing defaults...just in case, then clear the way for STOW 
+# Clear the way for STOW 
 for target in "${TARGETS[@]}"; do
   if [ -e "$target" ]; then
     echo "Removing $target"
@@ -66,9 +66,11 @@ PACKAGES=(
   "waybar"
   )
 
+cd "$REPO_NAME"
+
 for pkg in "${PACKAGES[@]}"; do
   echo "Stowing $pkg..."
-  stow -v "$pkg"
+  stow -v -t ~ "$pkg"
 done
 
 echo "All configs installed...probably."
