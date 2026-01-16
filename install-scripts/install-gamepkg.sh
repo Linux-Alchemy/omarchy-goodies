@@ -31,7 +31,7 @@ pac_games=(
 aur_games=(
   "bottles"
   "protonup-qt"
-  "input-remapper-bin"
+  "input-remapper-git"
   )
 
 # Install gaming packages from official repo
