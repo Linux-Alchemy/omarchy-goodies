@@ -41,7 +41,9 @@ done
 echo "Adding $USER to 'libvirt' group..."
 sudo usermod -aG libvirt "$USER"
 
+echo "Enabling libvirtd..."
+sudo systemctl enable --now libvirtd
+
 echo "Install complete. Unless something buggered up, in which case you should check the logs."
 echo "You will need to reboot for the group change to take effect."
-
 

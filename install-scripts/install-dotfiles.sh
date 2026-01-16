@@ -48,13 +48,26 @@ TARGETS=(
   "$HOME/.config/alacritty/alacritty.toml"
   "$HOME/.config/waybar/config.jsonc"
   "$HOME/.config/waybar/style.css"
+  "$HOME/.config/input-remapper-2/presets/Razer Razer Tartarus V2/TopStepX.json"
   )
+
+BACKUP_DIR=""
+BACKUP_STAMP="$(date +%Y%m%d-%H%M%S)"
+
+ensure_backup_dir() {
+  if [ -z "$BACKUP_DIR" ]; then
+    BACKUP_DIR="$HOME/.dotfiles-backup-$BACKUP_STAMP"
+    mkdir -p "$BACKUP_DIR"
+    echo "Backing up existing files to $BACKUP_DIR"
+  fi
+}
 
 # Clear the way for STOW 
 for target in "${TARGETS[@]}"; do
-  if [ -e "$target" ]; then
-    echo "Removing $target"
-    rm -rf "$target"
+  if [ -e "$target" ] || [ -L "$target" ]; then
+    ensure_backup_dir
+    echo "Backing up $target"
+    mv "$target" "$BACKUP_DIR/"
   fi
 done
 
@@ -64,6 +77,7 @@ PACKAGES=(
   "shell"
   "terminals"
   "waybar"
+  "input-remapper"
   )
 
 cd "$REPO_NAME"
@@ -74,5 +88,3 @@ for pkg in "${PACKAGES[@]}"; do
 done
 
 echo "All configs installed...probably."
-
-

@@ -76,7 +76,9 @@ done
 echo "Adding $USER to required groups..."
 sudo usermod -aG gamemode,openrazer,plugdev,input "$USER"
 
+echo "Enabling openrazer-daemon..."
+sudo systemctl enable --now openrazer-daemon
+
 echo "Install complete. Unless something buggered up, in which case you should check the logs."
 echo "You will need to reboot for the group changes to take effect."
-
 
