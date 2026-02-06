@@ -75,6 +75,8 @@ PACKAGES=(
   "shell"
   "terminals"
   "waybar"
+  "nvim"
+  "tmux"
   )
 
 cd "$REPO_NAME"
