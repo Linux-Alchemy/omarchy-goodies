@@ -42,13 +42,11 @@ TARGETS=(
   "$HOME/.zshrc"
   "$HOME/.config/hypr/bindings.conf"
   "$HOME/.config/hypr/input.conf"
-  "$HOME/.config/hypr/monitors.conf"
   "$HOME/.config/starship.toml"
   "$HOME/.config/ghostty/config"
   "$HOME/.config/alacritty/alacritty.toml"
   "$HOME/.config/waybar/config.jsonc"
   "$HOME/.config/waybar/style.css"
-  "$HOME/.config/input-remapper-2/presets/Razer Razer Tartarus V2/TopStepX.json"
   )
 
 BACKUP_DIR=""
@@ -77,7 +75,6 @@ PACKAGES=(
   "shell"
   "terminals"
   "waybar"
-  "input-remapper"
   )
 
 cd "$REPO_NAME"
