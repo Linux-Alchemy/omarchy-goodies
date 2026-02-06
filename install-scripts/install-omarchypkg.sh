@@ -27,6 +27,7 @@ pac_tools=(
   "zsh-syntax-highlighting"
   "zsh-autosuggestions"
   "stow"
+  "tmux"
   )
 
 # Tools found in the AUR
